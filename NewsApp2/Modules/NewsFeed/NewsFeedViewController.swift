@@ -12,25 +12,69 @@ class NewsFeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var news = [Article]()
-    let url =  "https://newsapi.org/v2/everything?q=Apple&from=2022-08-01&sortBy=popularity&apiKey=009bf23be7fa455095ae15b261ac5e0a"
+    
     private var newsURL: String?
+    private let refreshControl = UIRefreshControl()
+    private let activityIndicator = UIActivityIndicatorView(style: .medium)
+    private var newsService = NewsService()
+    private var page = 1
+    private var isLoading = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+        tableView.tableFooterView = activityIndicator
+        
+        fetchData()
+    }
+    
+    @objc private func refresh() {
+        guard !isLoading else { return }
+        page = 1
         fetchData()
     }
 
-    func fetchData() {
-        NetworkManager.fetchNews(url: url) { [weak self] newsModel in
+    private func fetchData() {
+        isLoading = true
+        activityIndicator.startAnimating()
+        
+        newsService.getNews(page: page) { [weak self] result in
             guard let self = self else { return }
-            self.news = newsModel.articles
+            
+            switch result {
+            case let .success(response):
+                let news = response.articles
+                
+                if self.page == 1 {
+                    self.news = news
+                } else {
+                    self.news += news
+                }
+                
+                self.page += 1
+            case let .failure(error):
+                self.showError(error: error.localizedDescription)
+            }
             
             DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
+                self.activityIndicator.stopAnimating()
                 self.tableView.reloadData()
+                self.isLoading = false
             }
         }
     }
+    
+    private func showError(error: String) {
+        let alertController = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+        let errorAction = UIAlertAction(title: "Ok", style: .default)
+        alertController.addAction(errorAction)
+        
+        present(alertController, animated: true)
+    }
+    
     
     // MARK: - Navigation
 
@@ -52,6 +96,15 @@ extension NewsFeedViewController: UITableViewDelegate {
         newsURL = news.url
         
         performSegue(withIdentifier: "ShowWebPage", sender: self)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard !isLoading else { return }
+        
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        if maximumOffset - scrollView.contentOffset.y <= 0 {
+            fetchData()
+        }
     }
     
 }
