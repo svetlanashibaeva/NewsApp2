@@ -9,6 +9,7 @@ import Foundation
 
 enum NewsEndpoint {
     case getNews(page: Int)
+    case getTopHeadlines(category: String?, source: String?, page: Int)
 }
 
 extension NewsEndpoint: EndpointProtocol {
@@ -18,7 +19,13 @@ extension NewsEndpoint: EndpointProtocol {
     }
     
     var path: String {
-        return "/v2/everything"
+        switch self {
+        case .getNews:
+            return "/v2/everything"
+        case .getTopHeadlines:
+            return "/v2/top-headlines"
+        }
+        
     }
     
     var params: [String : String] {
@@ -29,6 +36,11 @@ extension NewsEndpoint: EndpointProtocol {
                 "page": "\(page)",
                 "pageSize": "20"
             ]
+        case let .getTopHeadlines(category, source, page):
+            var params = ["country": "us", "page": "\(page)", "pageSize": "20"]
+            params["category"] = category
+            params["source"] = source
+            return params
         }
     }
     

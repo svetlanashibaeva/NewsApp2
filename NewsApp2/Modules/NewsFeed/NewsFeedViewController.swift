@@ -12,6 +12,8 @@ class NewsFeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var news = [Article]()
+    var category: String?
+    var source = "Reuters"
     
     private var newsURL: String?
     private let refreshControl = UIRefreshControl()
@@ -26,6 +28,7 @@ class NewsFeedViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
         tableView.tableFooterView = activityIndicator
+        title = category?.capitalized
         
         fetchData()
     }
@@ -40,7 +43,7 @@ class NewsFeedViewController: UIViewController {
         isLoading = true
         activityIndicator.startAnimating()
         
-        newsService.getNews(page: page) { [weak self] result in
+        newsService.getTopHeadlines(category: category, source: source, page: page) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
@@ -55,7 +58,9 @@ class NewsFeedViewController: UIViewController {
                 
                 self.page += 1
             case let .failure(error):
-                self.showError(error: error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.showError(error: error.localizedDescription)
+                }   
             }
             
             DispatchQueue.main.async {

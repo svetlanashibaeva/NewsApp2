@@ -13,6 +13,8 @@
 		D372AF12289A5D46004D0C87 /* NewsEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D372AF11289A5D46004D0C87 /* NewsEndpoint.swift */; };
 		D372AF14289A6152004D0C87 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D372AF13289A6152004D0C87 /* ApiService.swift */; };
 		D372AF16289A6E4F004D0C87 /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D372AF15289A6E4F004D0C87 /* NewsService.swift */; };
+		D372AF20289BB497004D0C87 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D372AF1F289BB497004D0C87 /* CategoriesViewController.swift */; };
+		D372AF22289BB56A004D0C87 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D372AF21289BB56A004D0C87 /* CategoryCell.swift */; };
 		D3866DCE2897E97300CEF73D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3866DCD2897E97300CEF73D /* AppDelegate.swift */; };
 		D3866DD02897E97300CEF73D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3866DCF2897E97300CEF73D /* SceneDelegate.swift */; };
 		D3866DD22897E97300CEF73D /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3866DD12897E97300CEF73D /* NewsFeedViewController.swift */; };
@@ -23,6 +25,7 @@
 		D3866DE52897EBAC00CEF73D /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3866DE42897EBAC00CEF73D /* NewsCell.swift */; };
 		D3866DE72897ECC700CEF73D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3866DE62897ECC700CEF73D /* NetworkManager.swift */; };
 		D3866DEB2897F0F900CEF73D /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3866DEA2897F0F900CEF73D /* NewsModel.swift */; };
+		D3CF8F49289BBA6400D36625 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CF8F48289BBA6400D36625 /* Category.swift */; };
 		D3DA142A289938AF00FCEE6B /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DA1429289938AF00FCEE6B /* WebViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +37,8 @@
 		D372AF11289A5D46004D0C87 /* NewsEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsEndpoint.swift; sourceTree = "<group>"; };
 		D372AF13289A6152004D0C87 /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		D372AF15289A6E4F004D0C87 /* NewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsService.swift; sourceTree = "<group>"; };
+		D372AF1F289BB497004D0C87 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		D372AF21289BB56A004D0C87 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		D3866DCA2897E97300CEF73D /* NewsApp2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3866DCD2897E97300CEF73D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3866DCF2897E97300CEF73D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -46,6 +51,7 @@
 		D3866DE42897EBAC00CEF73D /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		D3866DE62897ECC700CEF73D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		D3866DEA2897F0F900CEF73D /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
+		D3CF8F48289BBA6400D36625 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		D3DA1429289938AF00FCEE6B /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		E04B289D717FC2D4D3214653 /* Pods-NewsApp2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsApp2.release.xcconfig"; path = "Target Support Files/Pods-NewsApp2/Pods-NewsApp2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +99,7 @@
 				D3866DEA2897F0F900CEF73D /* NewsModel.swift */,
 				D372AF0F289A5C2D004D0C87 /* MyError.swift */,
 				D372AF11289A5D46004D0C87 /* NewsEndpoint.swift */,
+				D3CF8F48289BBA6400D36625 /* Category.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -110,6 +117,7 @@
 		D372AF09289958A5004D0C87 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D372AF1E289BB481004D0C87 /* Categories */,
 				D372AF06289957AB004D0C87 /* NewsFeed */,
 				D372AF0A289958D0004D0C87 /* WebView */,
 			);
@@ -138,6 +146,15 @@
 				D372AF0D289A5B70004D0C87 /* EndpointProtocol.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		D372AF1E289BB481004D0C87 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D372AF1F289BB497004D0C87 /* CategoriesViewController.swift */,
+				D372AF21289BB56A004D0C87 /* CategoryCell.swift */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		D3866DC12897E97300CEF73D = {
@@ -302,9 +319,12 @@
 				D372AF16289A6E4F004D0C87 /* NewsService.swift in Sources */,
 				D372AF12289A5D46004D0C87 /* NewsEndpoint.swift in Sources */,
 				D3866DD02897E97300CEF73D /* SceneDelegate.swift in Sources */,
+				D3CF8F49289BBA6400D36625 /* Category.swift in Sources */,
 				D3866DE52897EBAC00CEF73D /* NewsCell.swift in Sources */,
 				D372AF10289A5C2D004D0C87 /* MyError.swift in Sources */,
+				D372AF20289BB497004D0C87 /* CategoriesViewController.swift in Sources */,
 				D3DA142A289938AF00FCEE6B /* WebViewController.swift in Sources */,
+				D372AF22289BB56A004D0C87 /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

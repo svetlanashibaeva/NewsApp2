@@ -15,10 +15,10 @@ struct Article: Decodable {
     let author: String?
     let title: String?
     let description: String?
-    let url: String
+    let url: String?
     let urlToImage: String?
     let publishedAt: Date?
-    let content: String
+    let content: String?
     
     var date: String? {
         let dateFormatter = DateFormatter()

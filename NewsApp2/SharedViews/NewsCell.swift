@@ -24,13 +24,25 @@ class NewsCell: UITableViewCell {
     }
     
     private func setImage(urlToImage: String?) {
-        guard let urlToImage = urlToImage else { return }
+        guard let urlToImage = urlToImage else {
+            imageViewCell.image = UIImage(named: "default-image.jpg")
+            return
+        }
         let url = URL(string: urlToImage)
         imageViewCell.kf.indicatorType = .activity
         imageViewCell.kf.setImage(
             with: url,
             placeholder: UIImage(named: "default-image.jpg")
         )
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        titleLabel.text = nil
+        dataLabel.text = nil
+        contentLabel.text = nil
+        imageViewCell.image = nil
     }
 
 }
