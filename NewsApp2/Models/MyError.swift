@@ -11,15 +11,18 @@ enum MyError: LocalizedError {
     case urlError
     case unknownError
     case parseError
+    case customError(error: String)
     
     var errorDescription: String {
         switch self {
         case .urlError:
-            return "URL error"
+            return "Ошибка при отправке запроса"
         case .unknownError:
-            return "Unknown error"
+            return "Неизвестная ошибка"
         case .parseError:
-            return "Parse error"
+            return "Ошибка при обработке запроса"
+        case let .customError(error):
+            return error
         }
     }
 }

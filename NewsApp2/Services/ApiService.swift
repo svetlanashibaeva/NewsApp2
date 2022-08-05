@@ -43,25 +43,28 @@ class ApiService<T: Decodable> {
     }
     
     private func resumeTask(urlRequest: URLRequest, completion: @escaping (Result<T, Error>) -> ()) {
-        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            
             if let data = data {
-                if let result = self.parseJSON(withData: data) {
-                    completion(Result.success(result))
-                } else {
-                    completion(Result.failure(MyError.parseError))
+                print(String(data: data, encoding: .utf8) ?? "")
+                
+                if let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) {
+                    guard let result = self.parseJSON(from: data, with: T.self) else { return completion(Result.failure(MyError.parseError))}
+                    
+                    completion(Result.success(result)) }
+                else {
+                    guard let apiError = self.parseJSON(from: data, with: ApiError.self) else {
+                        completion(Result.failure(MyError.unknownError))
+                        return
+                    }
+                    completion(Result.failure(MyError.customError(error: apiError.message)))
                 }
-            } else if let error = error {
-                completion(Result.failure(error))
-            } else {
-                completion(Result.failure(MyError.unknownError))
             }
-        }
-        
-        task.resume()
+        }.resume()
     }
     
-    private func parseJSON(withData data: Data) -> T? {
-        return try? decoder.decode(T.self, from: data)
+    private func parseJSON(from data: Data, with type: Decodable) -> T? {
+        return try? decoder.decode(type, from: data)
     }
     
 }

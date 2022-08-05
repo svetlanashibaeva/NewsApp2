@@ -25,5 +25,5 @@ struct Article: Decodable {
         dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
         return dateFormatter.string(from: publishedAt ?? Date())
     }
-
 }
+

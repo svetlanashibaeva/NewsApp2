@@ -13,7 +13,7 @@ class NewsFeedViewController: UIViewController {
     
     var news = [Article]()
     var category: String?
-    var source = "Reuters"
+    var source: String?
     
     private var newsURL: String?
     private let refreshControl = UIRefreshControl()
@@ -28,7 +28,13 @@ class NewsFeedViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
         tableView.tableFooterView = activityIndicator
-        title = category?.capitalized
+        
+        if category != nil {
+            title = category?.capitalized
+        } else {
+            title = source?.capitalized
+        }
+        
         
         fetchData()
     }
@@ -70,14 +76,6 @@ class NewsFeedViewController: UIViewController {
                 self.isLoading = false
             }
         }
-    }
-    
-    private func showError(error: String) {
-        let alertController = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
-        let errorAction = UIAlertAction(title: "Ok", style: .default)
-        alertController.addAction(errorAction)
-        
-        present(alertController, animated: true)
     }
     
     
