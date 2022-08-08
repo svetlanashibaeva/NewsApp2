@@ -32,6 +32,8 @@
 		D3CF8F52289D116A00D36625 /* SourcesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CF8F51289D116A00D36625 /* SourcesService.swift */; };
 		D3CF8F55289D27A700D36625 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CF8F54289D27A700D36625 /* AlertController.swift */; };
 		D3CF8F57289D3DC400D36625 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CF8F56289D3DC400D36625 /* ApiError.swift */; };
+		D3CF8F5928A0E83900D36625 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CF8F5828A0E83900D36625 /* SearchViewController.swift */; };
+		D3CF8F5C28A0F33000D36625 /* Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CF8F5B28A0F33000D36625 /* Cell.xib */; };
 		D3DA142A289938AF00FCEE6B /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DA1429289938AF00FCEE6B /* WebViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +66,8 @@
 		D3CF8F51289D116A00D36625 /* SourcesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesService.swift; sourceTree = "<group>"; };
 		D3CF8F54289D27A700D36625 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		D3CF8F56289D3DC400D36625 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
+		D3CF8F5828A0E83900D36625 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		D3CF8F5B28A0F33000D36625 /* Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Cell.xib; sourceTree = "<group>"; };
 		D3DA1429289938AF00FCEE6B /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		E04B289D717FC2D4D3214653 /* Pods-NewsApp2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsApp2.release.xcconfig"; path = "Target Support Files/Pods-NewsApp2/Pods-NewsApp2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +136,7 @@
 		D372AF09289958A5004D0C87 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D3CF8F5A28A0E84300D36625 /* Search */,
 				D3CF8F53289D278A00D36625 /* Alert */,
 				D3CF8F4A289CF13500D36625 /* Sources */,
 				D372AF1E289BB481004D0C87 /* Categories */,
@@ -153,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				D3866DE42897EBAC00CEF73D /* NewsCell.swift */,
+				D3CF8F5B28A0F33000D36625 /* Cell.xib */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -228,6 +234,14 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
+		D3CF8F5A28A0E84300D36625 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				D3CF8F5828A0E83900D36625 /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -289,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3866DDD2897E97700CEF73D /* LaunchScreen.storyboard in Resources */,
+				D3CF8F5C28A0F33000D36625 /* Cell.xib in Resources */,
 				D3866DDA2897E97700CEF73D /* Assets.xcassets in Resources */,
 				D3866DD52897E97300CEF73D /* Main.storyboard in Resources */,
 			);
@@ -356,6 +371,7 @@
 				D372AF16289A6E4F004D0C87 /* NewsService.swift in Sources */,
 				D3CF8F57289D3DC400D36625 /* ApiError.swift in Sources */,
 				D372AF12289A5D46004D0C87 /* NewsEndpoint.swift in Sources */,
+				D3CF8F5928A0E83900D36625 /* SearchViewController.swift in Sources */,
 				D3866DD02897E97300CEF73D /* SceneDelegate.swift in Sources */,
 				D3CF8F49289BBA6400D36625 /* Category.swift in Sources */,
 				D3866DE52897EBAC00CEF73D /* NewsCell.swift in Sources */,

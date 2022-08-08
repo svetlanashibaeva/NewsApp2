@@ -11,6 +11,7 @@ enum NewsEndpoint {
     case getNews(page: Int)
     case getTopHeadlines(category: String?, source: String?, page: Int)
     case getSources
+    case getSearchResults(q: String, page: Int)
 }
 
 extension NewsEndpoint: EndpointProtocol {
@@ -27,6 +28,8 @@ extension NewsEndpoint: EndpointProtocol {
             return "/v2/top-headlines"
         case .getSources:
             return "/v2/top-headlines/sources"
+        case .getSearchResults:
+            return "/v2/everything"
         }
         
     }
@@ -51,6 +54,9 @@ extension NewsEndpoint: EndpointProtocol {
             return params
         case .getSources:
             let params = ["country": "us"]
+            return params
+        case let .getSearchResults(q, page):
+            let params = ["q": "\(q)", "page": "\(page)", "sortBy": "publishedAt"]
             return params
         }
     }

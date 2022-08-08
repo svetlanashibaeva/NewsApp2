@@ -63,7 +63,7 @@ class ApiService<T: Decodable> {
         }.resume()
     }
     
-    private func parseJSON(from data: Data, with type: Decodable) -> T? {
+    private func parseJSON<T: Decodable>(from data: Data, with type: T.Type) -> T? {
         return try? decoder.decode(type, from: data)
     }
     

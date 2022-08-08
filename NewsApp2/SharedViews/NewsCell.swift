@@ -10,6 +10,8 @@ import Kingfisher
 
 class NewsCell: UITableViewCell {
     
+    static let identifier = "NewsCell"
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dataLabel: UILabel!
     @IBOutlet weak var imageViewCell: UIImageView!

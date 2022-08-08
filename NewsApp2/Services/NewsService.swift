@@ -18,4 +18,8 @@ class NewsService {
     func getTopHeadlines(category: String?, source: String?, page: Int, completion: @escaping (Result<NewsModel, Error>) -> ()) {
         apiService.performRequest(with: NewsEndpoint.getTopHeadlines(category: category, source: source, page: page), completion: completion)
     }
+    
+    func getSearchResults(q: String, page: Int, completion: @escaping (Result<NewsModel, Error>) -> ()){
+        apiService.performRequest(with: NewsEndpoint.getSearchResults(q: q, page: page), completion: completion)
+    }
 }
