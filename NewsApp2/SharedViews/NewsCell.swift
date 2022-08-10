@@ -25,6 +25,13 @@ class NewsCell: UITableViewCell {
         setImage(urlToImage: news.urlToImage)
     }
     
+    func config(news: ArticleEntity) {
+        titleLabel.text = news.title
+        dataLabel.text = news.date
+        contentLabel.text = news.content
+        setImage(urlToImage: news.urlToImage)
+    }
+    
     private func setImage(urlToImage: String?) {
         guard let urlToImage = urlToImage else {
             imageViewCell.image = UIImage(named: "default-image.jpg")

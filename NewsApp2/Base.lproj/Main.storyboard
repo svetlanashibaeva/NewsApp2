@@ -134,21 +134,40 @@
             </objects>
             <point key="canvasLocation" x="263.768115942029" y="-29.464285714285712"/>
         </scene>
-        <!--Favourites-->
+        <!--Favorites-->
         <scene sceneID="1lz-cq-ZI4">
             <objects>
-                <viewController id="MAZ-pJ-ZpP" sceneMemberID="viewController">
+                <viewController id="MAZ-pJ-ZpP" customClass="FavoritesViewController" customModule="NewsApp2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kct-uy-4QO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LR7-aq-dV3">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="MAZ-pJ-ZpP" id="45n-ta-1A7"/>
+                                    <outlet property="delegate" destination="MAZ-pJ-ZpP" id="7RM-7L-hBF"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="weG-Xd-nW4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="LR7-aq-dV3" firstAttribute="leading" secondItem="weG-Xd-nW4" secondAttribute="leading" id="Mle-19-SkA"/>
+                            <constraint firstItem="weG-Xd-nW4" firstAttribute="bottom" secondItem="LR7-aq-dV3" secondAttribute="bottom" id="OGJ-nk-lNv"/>
+                            <constraint firstItem="weG-Xd-nW4" firstAttribute="trailing" secondItem="LR7-aq-dV3" secondAttribute="trailing" id="mLl-8i-rxS"/>
+                            <constraint firstItem="LR7-aq-dV3" firstAttribute="top" secondItem="weG-Xd-nW4" secondAttribute="top" id="nUH-Xi-5sv"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Favourites" image="star" catalog="system" id="sKc-Jn-aNp"/>
+                    <navigationItem key="navigationItem" title="Favorites" id="1ur-x4-ojU"/>
+                    <connections>
+                        <outlet property="tableView" destination="LR7-aq-dV3" id="mip-Ye-IVN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zre-1V-3kA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-646" y="1280"/>
+            <point key="canvasLocation" x="263.768115942029" y="1279.6875"/>
         </scene>
         <!--Search-->
         <scene sceneID="2dG-sN-pIx">
@@ -277,7 +296,7 @@
                         <segue destination="4pj-Pm-gJq" kind="relationship" relationship="viewControllers" id="tAu-xQ-15Q"/>
                         <segue destination="JNs-1c-mHD" kind="relationship" relationship="viewControllers" id="IVx-bO-XQ1"/>
                         <segue destination="md3-Wx-how" kind="relationship" relationship="viewControllers" id="aQw-C0-aZz"/>
-                        <segue destination="MAZ-pJ-ZpP" kind="relationship" relationship="viewControllers" id="E4O-s2-cgS"/>
+                        <segue destination="DNR-a1-xPz" kind="relationship" relationship="viewControllers" id="E4O-s2-cgS"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C4g-qs-L9f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -340,6 +359,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QT2-i7-pVi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-646.37681159420299" y="624.77678571428567"/>
+        </scene>
+        <!--Favourites-->
+        <scene sceneID="lsN-kb-K2e">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DNR-a1-xPz" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Favourites" image="star" catalog="system" id="sKc-Jn-aNp"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAH-zB-uKi">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="MAZ-pJ-ZpP" kind="relationship" relationship="rootViewController" id="IVg-Yb-C4t"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dNj-Hx-Zhw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-646.37681159420299" y="1279.6875"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

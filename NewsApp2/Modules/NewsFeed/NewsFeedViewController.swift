@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import CoreData
 
 class NewsFeedViewController: UIViewController {
+    
+    lazy var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     @IBOutlet weak var tableView: UITableView!
     
     var news = [Article]()
-    var savedNews = [Article]()
+    var articlesEntity = [Article]()
     var category: String?
     var source: String?
     
@@ -37,7 +40,6 @@ class NewsFeedViewController: UIViewController {
             title = source?.capitalized
         }
         
-        
         fetchData()
     }
     
@@ -45,10 +47,6 @@ class NewsFeedViewController: UIViewController {
         guard !isLoading else { return }
         page = 1
         fetchData()
-    }
-    
-    @objc private func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
-        print("long press")
     }
     
     private func fetchData() {
@@ -116,29 +114,31 @@ extension NewsFeedViewController: UITableViewDelegate {
         }
     }
     
-}
-
-extension NewsFeedViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return news.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as! NewsCell
-        let article = news[indexPath.row]
-        cell.config(news: article)
-        
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
-        cell.addGestureRecognizer(longPressRecognizer)
-        
-        return cell
-    }
-    
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let actionProvider: UIContextMenuActionProvider = {_ in
             let editMenu = UIMenu(title: "", children: [
-                UIAction(title: "Add to favorites", image: UIImage(systemName: "heart.fill")) { _ in },
+                UIAction(title: "Add to favorites", image: UIImage(systemName: "heart.fill")) { _ in
+                    let articleEntity = ArticleEntity(context: self.context)
+                    let article = self.news[indexPath.row]
+                    
+                    articleEntity.url = article.url
+                    articleEntity.urlToImage = article.urlToImage
+                    articleEntity.title = article.title
+                    articleEntity.sourceDescription = article.description
+                    articleEntity.author = article.author
+                    articleEntity.content = article.content
+                    articleEntity.publishedAt = article.publishedAt
+                    articleEntity.saveDate = Date()
+                    
+                    if self.context.hasChanges {
+                        do {
+                            try self.context.save()
+                            self.articlesEntity.append(article)
+                        } catch let error as NSError {
+                            print(error.localizedDescription)
+                        }
+                    }
+                },
                 UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
                     let shareController = UIActivityViewController(activityItems: [self.news[indexPath.row].url], applicationActivities: nil)
                     
@@ -156,6 +156,22 @@ extension NewsFeedViewController: UITableViewDataSource {
 
         }
         return UIContextMenuConfiguration(identifier: "contextMenu" as NSCopying, previewProvider: nil, actionProvider: actionProvider)
+    }
+    
+}
+
+extension NewsFeedViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+       return news.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as! NewsCell
+        let article = news[indexPath.row]
+        cell.config(news: article)
+        
+        return cell
     }
     
 }

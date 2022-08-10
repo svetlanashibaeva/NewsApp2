@@ -104,6 +104,29 @@ extension SearchViewController: UITableViewDelegate {
             fetchData(query: searchController.searchBar.text)
         }
     }
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let actionProvider: UIContextMenuActionProvider = {_ in
+            let editMenu = UIMenu(title: "", children: [
+                UIAction(title: "Add to favorites", image: UIImage(systemName: "heart.fill")) { _ in },
+                UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+                    let shareController = UIActivityViewController(activityItems: [self.news[indexPath.row].url], applicationActivities: nil)
+                    
+                    shareController.completionWithItemsHandler = { _, bool, _, _ in
+                        if bool {
+                            print("Успешно!")
+                        }
+                    }
+                    
+                    self.present(shareController, animated: true, completion: nil)
+                }
+            ])
+            
+            return editMenu
+
+        }
+        return UIContextMenuConfiguration(identifier: "contextMenu" as NSCopying, previewProvider: nil, actionProvider: actionProvider)
+    }
 }
 
 extension SearchViewController: UITableViewDataSource {
