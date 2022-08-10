@@ -12,6 +12,7 @@ class NewsFeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var news = [Article]()
+    var savedNews = [Article]()
     var category: String?
     var source: String?
     
@@ -45,7 +46,11 @@ class NewsFeedViewController: UIViewController {
         page = 1
         fetchData()
     }
-
+    
+    @objc private func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        print("long press")
+    }
+    
     private func fetchData() {
         isLoading = true
         activityIndicator.startAnimating()
@@ -124,7 +129,34 @@ extension NewsFeedViewController: UITableViewDataSource {
         let article = news[indexPath.row]
         cell.config(news: article)
         
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
+        cell.addGestureRecognizer(longPressRecognizer)
+        
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let actionProvider: UIContextMenuActionProvider = {_ in
+            let editMenu = UIMenu(title: "", children: [
+                UIAction(title: "Add to favorites", image: UIImage(systemName: "heart.fill")) { _ in },
+                UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+                    let shareController = UIActivityViewController(activityItems: [self.news[indexPath.row].url], applicationActivities: nil)
+                    
+                    shareController.completionWithItemsHandler = { _, bool, _, _ in
+                        if bool {
+                            print("Успешно!")
+                        }
+                    }
+                    
+                    self.present(shareController, animated: true, completion: nil)
+                }
+            ])
+            
+            return editMenu
+
+        }
+        return UIContextMenuConfiguration(identifier: "contextMenu" as NSCopying, previewProvider: nil, actionProvider: actionProvider)
+    }
+    
 }
 
