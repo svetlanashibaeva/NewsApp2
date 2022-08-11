@@ -32,6 +32,10 @@ class SearchViewController: UIViewController {
 //        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
+        
+        DispatchQueue.main.async {
+            self.searchController.searchBar.becomeFirstResponder()
+        }
     }
     
     func fetchData(query: String?) {
@@ -158,5 +162,4 @@ extension SearchViewController: UISearchResultsUpdating {
             self?.fetchData(query: searchText)
         })
     }
-    
 }

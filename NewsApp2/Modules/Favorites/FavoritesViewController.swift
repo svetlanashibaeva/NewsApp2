@@ -52,10 +52,32 @@ extension FavoritesViewController: UITableViewDataSource {
         
         return cell
     }
-    
-    
 }
 
 extension FavoritesViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        
+        let actionProvider: UIContextMenuActionProvider = {_ in
+            let editMenu = UIMenu(title: "", children: [
+                UIAction(title: "Delete", image: UIImage(systemName: "trash.fill")) { _ in
+                    
+                    let news = self.articlesEntity[indexPath.row]
+                    
+                    self.context.delete(news)
+                    self.articlesEntity.remove(at: indexPath.row)
+                    self.tableView.reloadData()
+                    
+                    do {
+                        try self.context.save()
+                    } catch let error as NSError {
+                        print(error.localizedDescription)
+                    }
+                    
+                }
+            ])
+            return editMenu
+        }
+        return UIContextMenuConfiguration(identifier: "deleteContextMenu" as NSCopying, previewProvider: nil, actionProvider: actionProvider)
+    }
 }
