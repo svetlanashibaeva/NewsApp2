@@ -20,7 +20,7 @@ public class ArticleEntity: NSManagedObject {
         articleEntity.urlToImage = article.urlToImage
         articleEntity.title = article.title
         articleEntity.content = article.content
-        articleEntity.publishedAt = article.publishedAt
+        articleEntity.date = article.date
         articleEntity.saveDate = Date()
     }
 }

@@ -110,6 +110,7 @@
                     <navigationItem key="navigationItem" title="Favorites" id="1ur-x4-ojU"/>
                     <connections>
                         <outlet property="tableView" destination="LR7-aq-dV3" id="mip-Ye-IVN"/>
+                        <segue destination="7xg-2v-8ef" kind="show" identifier="ShowFavoriteNews" id="kV7-uD-Ru2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zre-1V-3kA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -186,7 +187,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1580" y="-250"/>
+            <point key="canvasLocation" x="1629" y="149"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="Vy2-0h-aZb">
@@ -227,7 +228,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yXf-fm-4Wr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2349" y="-250"/>
+            <point key="canvasLocation" x="2457" y="625"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="36p-RR-1fD">
@@ -307,11 +308,11 @@
             </objects>
             <point key="canvasLocation" x="-646.37681159420299" y="624.77678571428567"/>
         </scene>
-        <!--Favourites-->
+        <!--Favorites-->
         <scene sceneID="lsN-kb-K2e">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DNR-a1-xPz" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Favourites" image="star" catalog="system" id="sKc-Jn-aNp"/>
+                    <tabBarItem key="tabBarItem" title="Favorites" image="star" catalog="system" id="sKc-Jn-aNp"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAH-zB-uKi">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -328,7 +329,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="kxk-vL-WYq"/>
+        <segue reference="kV7-uD-Ru2"/>
         <segue reference="vo1-jC-sqc"/>
     </inferredMetricsTieBreakers>
     <resources>
