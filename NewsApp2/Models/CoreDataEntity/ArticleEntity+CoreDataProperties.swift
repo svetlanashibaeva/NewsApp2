@@ -20,10 +20,7 @@ extension ArticleEntity {
     @NSManaged public var publishedAt: Date?
     @NSManaged public var urlToImage: String?
     @NSManaged public var url: String?
-    @NSManaged public var sourceDescription: String?
     @NSManaged public var title: String?
-    @NSManaged public var author: String?
     @NSManaged public var date: String?
     @NSManaged public var saveDate: Date?
-    
 }

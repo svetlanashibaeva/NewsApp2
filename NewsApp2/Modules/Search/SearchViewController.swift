@@ -26,7 +26,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UINib(nibName: "Cell", bundle: nil), forCellReuseIdentifier: NewsCell.identifier)
+        tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: NewsCell.identifier)
         tableView.tableFooterView = activityIndicator
         searchController.searchBar.placeholder = "Искать..."
 //        searchController.obscuresBackgroundDuringPresentation = false

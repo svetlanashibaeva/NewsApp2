@@ -12,4 +12,15 @@ import CoreData
 @objc(ArticleEntity)
 public class ArticleEntity: NSManagedObject {
 
+    static func saveArticle(from article: Article) {
+        
+        let articleEntity = ArticleEntity(context: CoreDataService.shared.context)
+        
+        articleEntity.url = article.url
+        articleEntity.urlToImage = article.urlToImage
+        articleEntity.title = article.title
+        articleEntity.content = article.content
+        articleEntity.publishedAt = article.publishedAt
+        articleEntity.saveDate = Date()
+    }
 }

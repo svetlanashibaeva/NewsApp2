@@ -22,6 +22,8 @@ class SourcesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(UINib(nibName: "SourceCell", bundle: nil), forCellReuseIdentifier: SourceCell.identifier)
+        
         fetchData()
     }
     
@@ -74,9 +76,9 @@ extension SourcesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Source", for: indexPath) as! SourceCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SourceCell.identifier, for: indexPath) as! SourceCell
         let source = sources[indexPath.row]
-        cell.config(source: source)
+        cell.config(text: source.name)
         
         return cell
     }

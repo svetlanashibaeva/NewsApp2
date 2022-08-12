@@ -8,7 +8,6 @@
 import Foundation
 
 enum NewsEndpoint {
-    case getNews(page: Int)
     case getTopHeadlines(category: String?, source: String?, page: Int)
     case getSources
     case getSearchResults(q: String, page: Int)
@@ -22,8 +21,6 @@ extension NewsEndpoint: EndpointProtocol {
     
     var path: String {
         switch self {
-        case .getNews:
-            return "/v2/everything"
         case .getTopHeadlines:
             return "/v2/top-headlines"
         case .getSources:
@@ -36,12 +33,6 @@ extension NewsEndpoint: EndpointProtocol {
     
     var params: [String : String] {
         switch self {
-        case let .getNews(page):
-            return [
-                "q": "apple",
-                "page": "\(page)",
-                "pageSize": "20"
-            ]
         case let .getTopHeadlines(category, source, page):
             var params = ["page": "\(page)", "pageSize": "20"]
               

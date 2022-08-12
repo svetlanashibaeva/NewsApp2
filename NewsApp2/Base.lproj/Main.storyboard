@@ -16,36 +16,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ne1-Ob-vH2">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Category" rowHeight="78" id="ZjR-0M-rau" customClass="CategoryCell" customModule="NewsApp2" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="78"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZjR-0M-rau" id="dxf-w9-VHb">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="78"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="axn-rH-7E4">
-                                                    <rect key="frame" x="20" y="31" width="374" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="axn-rH-7E4" secondAttribute="trailing" id="1ac-e9-oFr"/>
-                                                <constraint firstItem="axn-rH-7E4" firstAttribute="top" secondItem="dxf-w9-VHb" secondAttribute="topMargin" constant="20" id="AmZ-Or-XeC"/>
-                                                <constraint firstItem="axn-rH-7E4" firstAttribute="leading" secondItem="dxf-w9-VHb" secondAttribute="leadingMargin" id="MJt-of-mOY"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="axn-rH-7E4" secondAttribute="bottom" constant="20" id="fMW-1G-w8J"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="nameCategoryLabel" destination="axn-rH-7E4" id="ZLU-1q-bet"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ne1-Ob-vH2">
+                                <rect key="frame" x="0.0" y="140" width="414" height="673"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="URd-S5-1kC" id="vWI-G9-kmT"/>
                                     <outlet property="delegate" destination="URd-S5-1kC" id="P51-mW-SsG"/>
@@ -53,7 +27,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dzH-ac-hIC"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
                             <constraint firstItem="dzH-ac-hIC" firstAttribute="bottom" secondItem="ne1-Ob-vH2" secondAttribute="bottom" id="UZ9-gY-yDr"/>
                             <constraint firstItem="dzH-ac-hIC" firstAttribute="trailing" secondItem="ne1-Ob-vH2" secondAttribute="trailing" id="d3p-Qe-ybH"/>
@@ -79,36 +53,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="qPS-wS-YSk">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Source" id="FbO-sh-C2w" customClass="SourceCell" customModule="NewsApp2" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="89"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FbO-sh-C2w" id="nf6-20-FBs">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Source" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HYT-9p-bX4">
-                                                    <rect key="frame" x="20" y="31" width="374" height="27"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="HYT-9p-bX4" secondAttribute="trailing" id="Aj4-M6-ded"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="HYT-9p-bX4" secondAttribute="bottom" constant="20" id="slh-qi-5St"/>
-                                                <constraint firstItem="HYT-9p-bX4" firstAttribute="leading" secondItem="nf6-20-FBs" secondAttribute="leadingMargin" id="tTg-dK-Lcm"/>
-                                                <constraint firstItem="HYT-9p-bX4" firstAttribute="top" secondItem="nf6-20-FBs" secondAttribute="topMargin" constant="20" id="uPx-KK-1Jz"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="sourceLabel" destination="HYT-9p-bX4" id="qk8-um-KZK"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="qPS-wS-YSk">
+                                <rect key="frame" x="0.0" y="140" width="414" height="673"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <connections>
                                     <outlet property="dataSource" destination="y7e-RC-baC" id="ffE-lO-fwt"/>
                                     <outlet property="delegate" destination="y7e-RC-baC" id="QFo-Dn-dg3"/>
@@ -116,7 +63,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="TXP-Wi-OU8"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
                             <constraint firstItem="qPS-wS-YSk" firstAttribute="leading" secondItem="TXP-Wi-OU8" secondAttribute="leading" id="0yH-kj-dSd"/>
                             <constraint firstItem="TXP-Wi-OU8" firstAttribute="bottom" secondItem="qPS-wS-YSk" secondAttribute="bottom" id="3LM-fQ-Lvb"/>
@@ -231,7 +178,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tgk-7T-FPE" secondAttribute="bottom" id="feo-75-5uC"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="News" id="wXz-fa-BWK"/>
+                    <navigationItem key="navigationItem" title="News" largeTitleDisplayMode="never" id="wXz-fa-BWK"/>
                     <connections>
                         <outlet property="tableView" destination="tgk-7T-FPE" id="qwI-or-JgS"/>
                         <segue destination="7xg-2v-8ef" kind="show" identifier="ShowWebPage" id="kxk-vL-WYq"/>
@@ -309,8 +256,8 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4pj-Pm-gJq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Categories" image="list.triangle" catalog="system" id="tCV-Od-DFD"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Gml-qw-3dn">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Gml-qw-3dn">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -328,8 +275,8 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JNs-1c-mHD" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Sourses" image="info.circle" catalog="system" id="LKm-OL-ydM"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Txh-gg-RlM">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Txh-gg-RlM">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -381,8 +328,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="5da-gJ-mSm"/>
-        <segue reference="XO2-X7-9mQ"/>
+        <segue reference="kxk-vL-WYq"/>
+        <segue reference="vo1-jC-sqc"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="info.circle" catalog="system" width="32" height="32"/>
@@ -391,6 +338,9 @@
         <image name="star" catalog="system" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

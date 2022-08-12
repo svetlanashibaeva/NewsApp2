@@ -14,6 +14,12 @@ class CategoriesViewController: UIViewController {
     let categories = Category.allCases
     var selectedCategory: Category?
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableView.register(UINib(nibName: "SourceCell", bundle: nil), forCellReuseIdentifier: SourceCell.identifier)
+    }
+    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -29,9 +35,9 @@ extension CategoriesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Category", for: indexPath) as! CategoryCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SourceCell.identifier, for: indexPath) as! SourceCell
         let category = categories[indexPath.row]
-        cell.config(category: category)
+        cell.config(text: category.rawValue.capitalized)
         
         return cell
     }

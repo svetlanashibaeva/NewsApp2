@@ -10,8 +10,6 @@ import CoreData
 
 class FavoritesViewController: UIViewController {
     
-    lazy var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
     @IBOutlet weak var tableView: UITableView!
     
     var articlesEntity = [ArticleEntity]()
@@ -19,7 +17,7 @@ class FavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UINib(nibName: "Cell", bundle: nil), forCellReuseIdentifier: NewsCell.identifier)
+        tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: NewsCell.identifier)
         
     }
     
@@ -30,14 +28,13 @@ class FavoritesViewController: UIViewController {
         let sortDescriptor = NSSortDescriptor(key: "saveDate", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         do {
-            let result = try context.fetch(fetchRequest)
+            let result = try CoreDataService.shared.context.fetch(fetchRequest)
             articlesEntity = result
             tableView.reloadData()
         } catch let error as NSError {
             print(error.localizedDescription)
         }
     }
-    
 }
 
 extension FavoritesViewController: UITableViewDataSource {
@@ -60,20 +57,19 @@ extension FavoritesViewController: UITableViewDelegate {
         
         let actionProvider: UIContextMenuActionProvider = {_ in
             let editMenu = UIMenu(title: "", children: [
-                UIAction(title: "Delete", image: UIImage(systemName: "trash.fill")) { _ in
-                    
+                UIAction(title: "Delete", image: UIImage(systemName: "trash.fill")) { [weak self] _ in
+                    guard let self = self else { return }
                     let news = self.articlesEntity[indexPath.row]
                     
-                    self.context.delete(news)
+                    CoreDataService.shared.context.delete(news)
                     self.articlesEntity.remove(at: indexPath.row)
                     self.tableView.reloadData()
                     
                     do {
-                        try self.context.save()
+                        try CoreDataService.shared.context.save()
                     } catch let error as NSError {
                         print(error.localizedDescription)
-                    }
-                    
+                    }    
                 }
             ])
             return editMenu

@@ -10,8 +10,6 @@ import CoreData
 
 class NewsFeedViewController: UIViewController {
     
-    lazy var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
     @IBOutlet weak var tableView: UITableView!
     
     var news = [Article]()
@@ -29,16 +27,12 @@ class NewsFeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UINib(nibName: "Cell", bundle: nil), forCellReuseIdentifier: NewsCell.identifier)
+        tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: NewsCell.identifier)
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
         tableView.tableFooterView = activityIndicator
         
-        if category != nil {
-            title = category?.capitalized
-        } else {
-            title = source?.capitalized
-        }
+        title = category?.capitalized ?? source?.capitalized
         
         fetchData()
     }
@@ -82,6 +76,12 @@ class NewsFeedViewController: UIViewController {
         }
     }
     
+    func checkArticleIsSaved(indexPath: IndexPath) -> Bool {
+        let fetchRequest: NSFetchRequest<ArticleEntity> = ArticleEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "url == %@", news[indexPath.row].url)
+        return (try? CoreDataService.shared.context.fetch(fetchRequest))?.isEmpty == false
+    }
+    
     
     // MARK: - Navigation
 
@@ -115,49 +115,38 @@ extension NewsFeedViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let actionProvider: UIContextMenuActionProvider = {_ in
-            let editMenu = UIMenu(title: "", children: [
-                UIAction(title: "Add to favorites", image: UIImage(systemName: "heart.fill")) { _ in
-                    let articleEntity = ArticleEntity(context: self.context)
-                    let article = self.news[indexPath.row]
-                    
-                    articleEntity.url = article.url
-                    articleEntity.urlToImage = article.urlToImage
-                    articleEntity.title = article.title
-                    articleEntity.sourceDescription = article.description
-                    articleEntity.author = article.author
-                    articleEntity.content = article.content
-                    articleEntity.publishedAt = article.publishedAt
-                    articleEntity.saveDate = Date()
-                    
-                    if self.context.hasChanges {
-                        do {
-                            try self.context.save()
-                            self.articlesEntity.append(article)
-                        } catch let error as NSError {
-                            print(error.localizedDescription)
-                        }
-                    }
-                },
-                UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
-                    let shareController = UIActivityViewController(activityItems: [self.news[indexPath.row].url], applicationActivities: nil)
-                    
-                    shareController.completionWithItemsHandler = { _, bool, _, _ in
-                        if bool {
-                            print("Успешно!")
-                        }
-                    }
-                    
-                    self.present(shareController, animated: true, completion: nil)
-                }
-            ])
+        
+        let actionProvider: UIContextMenuActionProvider = { _ in
             
-            return editMenu
-
+            let addToFavoritesAction = UIAction(title: "Add to favorites", image: UIImage(systemName: "heart.fill")) { [weak self] _ in
+                guard let self = self else { return }
+                let article = self.news[indexPath.row]
+                
+                ArticleEntity.saveArticle(from: article)
+                
+                CoreDataService.shared.saveContext { [weak self] in
+                    self?.articlesEntity.append(article)
+                }
+            }
+            
+            let sharedAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
+                guard let self = self else { return }
+                
+                let shareController = UIActivityViewController(activityItems: [self.news[indexPath.row].url], applicationActivities: nil)
+                
+                self.present(shareController, animated: true, completion: nil)
+            }
+            
+            var child = [sharedAction]
+            
+            if !self.checkArticleIsSaved(indexPath: indexPath) {
+                child.insert(addToFavoritesAction, at: 0)
+            }
+            
+            return UIMenu(title: "", children: child)
         }
         return UIContextMenuConfiguration(identifier: "contextMenu" as NSCopying, previewProvider: nil, actionProvider: actionProvider)
     }
-    
 }
 
 extension NewsFeedViewController: UITableViewDataSource {
@@ -173,6 +162,5 @@ extension NewsFeedViewController: UITableViewDataSource {
         
         return cell
     }
-    
 }
 
