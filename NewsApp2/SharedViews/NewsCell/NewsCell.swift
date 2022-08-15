@@ -53,5 +53,4 @@ class NewsCell: UITableViewCell {
         contentLabel.text = nil
         imageViewCell.image = nil
     }
-
 }

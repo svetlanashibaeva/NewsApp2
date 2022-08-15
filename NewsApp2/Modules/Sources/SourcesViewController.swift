@@ -11,12 +11,11 @@ class SourcesViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var sources = [Source]()
-    var source: String?
-    var selectedSource: Source?
-    
-    private var sourcesService = SourcesService()
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
+    
+    private let sourcesService = SourcesService()
+    private var sources = [Source]()
+    private var selectedSource: Source?
     private var page = 1
     
     override func viewDidLoad() {
@@ -30,13 +29,12 @@ class SourcesViewController: UIViewController {
     func fetchData() {
         activityIndicator.startAnimating()
         
-        sourcesService.getSources(source: source) { [weak self] result in
+        sourcesService.getSources() { [weak self] result in
             guard let self = self else { return }
             
             switch result {
             case let .success(response):
-                let sources = response.sources
-                self.sources = sources
+                self.sources = response.sources
                 
             case let .failure(error):
                 DispatchQueue.main.async {
@@ -56,10 +54,10 @@ class SourcesViewController: UIViewController {
        
         newsFeedViewController.source = selectedSource?.id
     }
-
 }
 
 extension SourcesViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -77,10 +75,8 @@ extension SourcesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SourceCell.identifier, for: indexPath) as! SourceCell
-        let source = sources[indexPath.row]
-        cell.config(text: source.name)
+        cell.config(text: sources[indexPath.row].name)
         
         return cell
     }
-    
 }

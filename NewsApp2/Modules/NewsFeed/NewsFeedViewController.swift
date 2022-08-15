@@ -12,17 +12,19 @@ class NewsFeedViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var news = [Article]()
-    var articlesEntity = [Article]()
-    var category: String?
-    var source: String?
-    
-    private var newsURL: String?
     private let refreshControl = UIRefreshControl()
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
-    private var newsService = NewsService()
+    
+    private let newsService = NewsService()
+    
+    private var news = [Article]()
+    private var newsURL: String?
     private var page = 1
     private var isLoading = false
+    private var isListEnded = false
+    
+    var category: String?
+    var source: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +61,9 @@ class NewsFeedViewController: UIViewController {
                 } else {
                     self.news += news
                 }
-                
+                self.isListEnded = news.isEmpty
                 self.page += 1
+                
             case let .failure(error):
                 DispatchQueue.main.async {
                     self.showError(error: error.localizedDescription)
@@ -76,12 +79,11 @@ class NewsFeedViewController: UIViewController {
         }
     }
     
-    func checkArticleIsSaved(indexPath: IndexPath) -> Bool {
+    private func checkArticleIsSaved(indexPath: IndexPath) -> Bool {
         let fetchRequest: NSFetchRequest<ArticleEntity> = ArticleEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "url == %@", news[indexPath.row].url)
         return (try? CoreDataService.shared.context.fetch(fetchRequest))?.isEmpty == false
     }
-    
     
     // MARK: - Navigation
 
@@ -98,15 +100,14 @@ extension NewsFeedViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        let news = news[indexPath.row]
-        newsURL = news.url
+  
+        newsURL = news[indexPath.row].url
         
         performSegue(withIdentifier: "ShowWebPage", sender: self)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !isLoading else { return }
+        guard !isLoading && !isListEnded else { return }
         
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
         if maximumOffset - scrollView.contentOffset.y <= 0 {
@@ -124,9 +125,7 @@ extension NewsFeedViewController: UITableViewDelegate {
                 
                 ArticleEntity.saveArticle(from: article)
                 
-                CoreDataService.shared.saveContext { [weak self] in
-                    self?.articlesEntity.append(article)
-                }
+                CoreDataService.shared.saveContext()
             }
             
             let sharedAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in

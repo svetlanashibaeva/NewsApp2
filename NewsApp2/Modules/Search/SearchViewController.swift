@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class SearchViewController: UIViewController {
     
@@ -13,11 +14,11 @@ class SearchViewController: UIViewController {
     
     var news = [Article]()
     
-    private var searchController = UISearchController()
+    private let searchController = UISearchController()
+    private let activityIndicator = UIActivityIndicatorView(style: .medium)
+    private let newsService = NewsService()
     
     private var newsURL: String?
-    private let activityIndicator = UIActivityIndicatorView(style: .medium)
-    private var newsService = NewsService()
     private var page = 1
     private var isLoading = false
     private var isListEnded = true
@@ -29,7 +30,7 @@ class SearchViewController: UIViewController {
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: NewsCell.identifier)
         tableView.tableFooterView = activityIndicator
         searchController.searchBar.placeholder = "Искать..."
-//        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
         
@@ -78,6 +79,12 @@ class SearchViewController: UIViewController {
         tableView.reloadData()
     }
     
+    private func checkArticleIsSaved(indexPath: IndexPath) -> Bool {
+        let fetchRequest: NSFetchRequest<ArticleEntity> = ArticleEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "url == %@", news[indexPath.row].url)
+        return (try? CoreDataService.shared.context.fetch(fetchRequest))?.isEmpty == false
+    }
+    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -87,21 +94,20 @@ class SearchViewController: UIViewController {
             webViewController.url = URL(string: url)
         }
     }
-    
 }
 
 extension SearchViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let news = news[indexPath.row]
-        newsURL = news.url
+        newsURL = news[indexPath.row].url
         
         performSegue(withIdentifier: "ShowSearchNews", sender: self)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !isLoading else { return }
+        guard !isLoading && !isListEnded else { return }
 
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
         if maximumOffset - scrollView.contentOffset.y <= 0 {
@@ -110,30 +116,40 @@ extension SearchViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let actionProvider: UIContextMenuActionProvider = {_ in
-            let editMenu = UIMenu(title: "", children: [
-                UIAction(title: "Add to favorites", image: UIImage(systemName: "heart.fill")) { _ in },
-                UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
-                    let shareController = UIActivityViewController(activityItems: [self.news[indexPath.row].url], applicationActivities: nil)
-                    
-                    shareController.completionWithItemsHandler = { _, bool, _, _ in
-                        if bool {
-                            print("Успешно!")
-                        }
-                    }
-                    
-                    self.present(shareController, animated: true, completion: nil)
-                }
-            ])
+        
+        let actionProvider: UIContextMenuActionProvider = { _ in
             
-            return editMenu
-
+            let addToFavoritesAction = UIAction(title: "Add to favorites", image: UIImage(systemName: "heart.fill")) { [weak self] _ in
+                guard let self = self else { return }
+                let article = self.news[indexPath.row]
+                
+                ArticleEntity.saveArticle(from: article)
+                
+                CoreDataService.shared.saveContext(completion: nil)
+            }
+            
+            let sharedAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
+                guard let self = self else { return }
+                
+                let shareController = UIActivityViewController(activityItems: [self.news[indexPath.row].url], applicationActivities: nil)
+                
+                self.present(shareController, animated: true, completion: nil)
+            }
+            
+            var child = [sharedAction]
+            
+            if !self.checkArticleIsSaved(indexPath: indexPath) {
+                child.insert(addToFavoritesAction, at: 0)
+            }
+            
+            return UIMenu(title: "", children: child)
         }
         return UIContextMenuConfiguration(identifier: "contextMenu" as NSCopying, previewProvider: nil, actionProvider: actionProvider)
     }
 }
 
 extension SearchViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return news.count
     }
@@ -148,6 +164,7 @@ extension SearchViewController: UITableViewDataSource {
 }
 
 extension SearchViewController: UISearchResultsUpdating {
+    
     func updateSearchResults(for searchController: UISearchController) {
         timer?.invalidate()
         

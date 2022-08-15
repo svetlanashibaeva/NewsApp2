@@ -35,15 +35,16 @@ class ApiService<T: Decodable> {
         urlComponents.scheme = endpoint.scheme
         urlComponents.host = endpoint.host
         urlComponents.path = endpoint.path
-        urlComponents.queryItems = endpoint.params.map({ key, value -> URLQueryItem in
+        urlComponents.queryItems = endpoint.params.map { key, value -> URLQueryItem in
             URLQueryItem(name: key, value: value)
-        })
+        }
         
         return urlComponents.url
     }
     
     private func resumeTask(urlRequest: URLRequest, completion: @escaping (Result<T, Error>) -> ()) {
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        URLSession.shared.dataTask(with: urlRequest) { [weak self] data, response, error in
+            guard let self = self else { return }
             
             if let data = data {
                 print(String(data: data, encoding: .utf8) ?? "")
@@ -65,6 +66,5 @@ class ApiService<T: Decodable> {
     
     private func parseJSON<T: Decodable>(from data: Data, with type: T.Type) -> T? {
         return try? decoder.decode(type, from: data)
-    }
-    
+    }  
 }

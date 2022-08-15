@@ -11,7 +11,7 @@ class SourcesService {
     
     private let apiService = ApiService<Sources>()
     
-    func getSources(source: String?, completion: @escaping (Result<Sources, Error>) -> ()) {
+    func getSources(completion: @escaping (Result<Sources, Error>) -> ()) {
         apiService.performRequest(with: NewsEndpoint.getSources, completion: completion)
     }
 }

@@ -11,8 +11,8 @@ class CategoriesViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let categories = Category.allCases
-    var selectedCategory: Category?
+    private let categories = Category.allCases
+    private var selectedCategory: Category?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +30,7 @@ class CategoriesViewController: UIViewController {
 }
 
 extension CategoriesViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories.count
     }
