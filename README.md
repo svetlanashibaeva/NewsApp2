@@ -1,6 +1,6 @@
 # NewsApp
 
-Используется:
+Used:
 1) KingFisher
 2) CoreData
 3) NSFetchedResultsController
